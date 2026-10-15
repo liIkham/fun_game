@@ -111,7 +111,14 @@ def draw_winner(text):
     WIN.blit(draw_text, (WIDTH/2 - draw_text.get_width() /
                          2, HEIGHT/2 - draw_text.get_height()/2))
     pygame.display.update()
-    pygame.time.delay(5000)
+    clock = pygame.time.Clock()
+    start = pygame.time.get_ticks()
+    while pygame.time.get_ticks() - start < 5000:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                raise SystemExit
+        clock.tick(FPS)
 
 
 def main():
@@ -162,6 +169,8 @@ def main():
             winner_text = "Red Wins!"
 
         if winner_text != "":
+            red_bullets.clear()
+            yellow_bullets.clear()
             draw_winner(winner_text)
             break
 
